@@ -1,0 +1,18 @@
+{
+    "gpio": {
+        "left": 0,
+        "right": 1,
+        "up": 2,
+        "down": 3,
+        "primary": 4,
+        "secondary": 5
+    },
+    "pico": {
+        "left": "left",
+        "right": "right",
+        "up": "up",
+        "down": "down",
+        "primary": "z",
+        "secondary": "x"
+    }
+}
