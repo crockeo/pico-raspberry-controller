@@ -9,7 +9,7 @@ from typing import Dict
 
 
 HOME_DIR = os.getenv("HOME")
-CONFIG_LOCATION = path.join(HOME_DIR, ".pico-raspberry.json")
+CONFIG_LOCATION = path.join("usr", "local", "etc", "pico-raspberry.json")
 
 
 class ControllerConfig:
