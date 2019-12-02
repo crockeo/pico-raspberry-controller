@@ -1,0 +1,11 @@
+[Unit]
+Description=Input shim for
+After=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=${USER}
+ExecStart=/usr/bin/env python ${SERVICE_PATH}/main.py
