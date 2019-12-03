@@ -36,8 +36,8 @@ class ControllerConfig:
         "right": "right",
         "up": "up",
         "down": "down",
-        "primary": "primary",
-        "secondary": "secondary",
+        "primary": "z",
+        "secondary": "x",
     }
 
     def __init__(self, gpio={}, pico={}):
@@ -85,13 +85,9 @@ class ControllerButton:
         self.gpio_button = gpio_button
         self.pico_button = pico_button
         self.button = Button(gpio_button, pull_up=False)
-        self.button.when_pressed = self.simulate_pico
 
-    def simulate_pico(self):
-        """
-        Simulates the keyboard key press for PICO-8.
-        """
-        keyboard.press_and_release(self.pico_button)
+        self.button.when_pressed = lambda: keyboard.press(self.pico_button)
+        self.button.when_released = lambda: keyboard.release(self.pico_button)
 
 
 class Controller:
