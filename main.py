@@ -91,6 +91,9 @@ class ControllerButton:
         self.button.when_released = self.__make_button_callback(False)
 
     def __make_button_callback(self, pressed: bool):
+        """
+        Constructs a callback used to simulate input
+        """
         def callback():
             if DEBUG:
                 action = "pressed" if pressed else "released"

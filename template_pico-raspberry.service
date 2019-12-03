@@ -1,5 +1,5 @@
 [Unit]
-Description=Input shim for
+Description=Input shim for PICO 8 and Raspberry pi
 After=network-online.target
 StartLimitIntervalSec=0
 
