@@ -23,12 +23,12 @@ class ControllerConfig:
     ]
 
     DEFAULT_GPIO = {
-        "left": 0,
-        "right": 1,
-        "up": 2,
-        "down": 3,
-        "primary": 4,
-        "secondary": 5,
+        "left": 13,
+        "right": 19,
+        "up": 16,
+        "down": 26,
+        "primary": 20,
+        "secondary": 21,
     }
 
     DEFAULT_PICO = {
@@ -84,7 +84,7 @@ class ControllerButton:
     def __init__(self, gpio_button: int, pico_button: str):
         self.gpio_button = gpio_button
         self.pico_button = pico_button
-        self.button = Button(gpio_button)
+        self.button = Button(gpio_button, pull_up=False)
         self.button.when_pressed = self.simulate_pico
 
     def simulate_pico(self):
@@ -104,6 +104,7 @@ class Controller:
 
 
 def main():
+    # Configuring the controller
     conf = ControllerConfig()
     try:
         conf = ControllerConfig.from_json(CONFIG_LOCATION)
@@ -115,6 +116,10 @@ def main():
         print("Encountered an unexpected error:")
         traceback.print_exception(type(e), e, e.__traceback__)
 
+    # Registering the controller
+    controller = Controller(conf)
+
+    # Waiting for button input
     try:
         keyboard.wait()
     except KeyboardInterrupt:
