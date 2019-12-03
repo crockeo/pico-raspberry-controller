@@ -10,6 +10,7 @@ from typing import Dict
 
 HOME_DIR = os.getenv("HOME")
 CONFIG_LOCATION = path.join("usr", "local", "etc", "pico-raspberry.json")
+DEBUG = True
 
 
 class ControllerConfig:
@@ -86,8 +87,23 @@ class ControllerButton:
         self.pico_button = pico_button
         self.button = Button(gpio_button, pull_up=False)
 
-        self.button.when_pressed = lambda: keyboard.press(self.pico_button)
-        self.button.when_released = lambda: keyboard.release(self.pico_button)
+        self.button.when_pressed = self.__press(True)
+        self.button.when_released = self.__press(False)
+
+    def __press(self, pressed: bool):
+        def callback():
+            if DEBUG:
+                action = "pressed" if pressed else "released"
+                print(
+                    "Button {} {}, simulating '{}' {}".format(
+                        self.gpio_button, action, self.pico_button, action
+                    )
+                )
+
+            if pressed:
+                keyboard.press(self.pico_button)
+            else:
+                keyboard.release(self.pico_button)
 
 
 class Controller:
