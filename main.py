@@ -87,10 +87,10 @@ class ControllerButton:
         self.pico_button = pico_button
         self.button = Button(gpio_button, pull_up=False)
 
-        self.button.when_pressed = self.__press(True)
-        self.button.when_released = self.__press(False)
+        self.button.when_pressed = self.__make_button_callback(True)
+        self.button.when_released = self.__make_button_callback(False)
 
-    def __press(self, pressed: bool):
+    def __make_button_callback(self, pressed: bool):
         def callback():
             if DEBUG:
                 action = "pressed" if pressed else "released"
@@ -104,6 +104,8 @@ class ControllerButton:
                 keyboard.press(self.pico_button)
             else:
                 keyboard.release(self.pico_button)
+
+        return callback
 
 
 class Controller:
