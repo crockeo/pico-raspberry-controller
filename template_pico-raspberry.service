@@ -7,7 +7,7 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-User=${USER}
+User=root
 ExecStart=/usr/bin/env python3 ${SERVICE_PATH}/main.py
 
 [Install]
