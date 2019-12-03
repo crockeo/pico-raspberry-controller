@@ -16,3 +16,4 @@ cat template_pico-raspberry.service \
 # Moving the service and enabling the service file
 $SUDO mv pico-raspberry.service /etc/systemd/system/
 $SUDO systemctl enable pico-raspberry
+$SUDO systemctl start pico-raspberry
