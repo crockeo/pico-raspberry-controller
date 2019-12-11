@@ -85,7 +85,7 @@ class ControllerButton:
     def __init__(self, gpio_button: int, pico_button: str):
         self.gpio_button = gpio_button
         self.pico_button = pico_button
-        self.button = Button(gpio_button, pull_up=False)
+        self.button = Button(gpio_button, pull_up=True)
 
         self.button.when_pressed = self.__make_button_callback(True)
         self.button.when_released = self.__make_button_callback(False)
