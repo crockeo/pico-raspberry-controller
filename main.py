@@ -94,6 +94,7 @@ class ControllerButton:
         """
         Constructs a callback used to simulate input
         """
+
         def callback():
             if DEBUG:
                 action = "pressed" if pressed else "released"
@@ -111,6 +112,24 @@ class ControllerButton:
         return callback
 
 
+class ComboControllerButton:
+    def __init__(self, gpio_buttons: Set[int], pico_button: str):
+        self.gpio_buttons = gpio_buttons
+        self.pico_button = pico_button
+
+        self.buttons = []
+        for gpio_button in self.gpio_buttons:
+            button = Button(gpio_button)
+            button.when_pressed = self.__make_button_callback()
+
+    def __make_button_callback(self):
+        def callback():
+            for button in self.buttons():
+                if not button.is_pressed:
+                    return
+            keyboard.press_and_release("escape")
+
+
 class Controller:
     def __init__(self, config: ControllerConfig):
         self.buttons = {}
@@ -118,6 +137,9 @@ class Controller:
             self.buttons[button] = ControllerButton(
                 config.gpio[button], config.pico[button]
             )
+        self.buttons["escape"] = ComboControllerButton(
+            {"up", "down", "primary"}, "escape",
+        )
 
 
 def main():
