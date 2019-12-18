@@ -128,6 +128,7 @@ class ComboControllerButton:
                 if not button.is_pressed:
                     return
             keyboard.press_and_release("escape")
+        return callback
 
 
 class Controller:
